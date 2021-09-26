@@ -1,0 +1,108 @@
+@import "./reset.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  text-align: none;
+  background-color: #2c3e50;
+  overflow: hidden;
+  position: relative;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  font-size: 20px;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.game {
+  width: 800px;
+  height: 500px;
+  background: url("./img/background.png") center/cover no-repeat;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.game__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.header__button {
+  width: 50px;
+  height: 50px;
+  background-color: #f8c291;
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+.header__timer {
+  width: 100px;
+  height: 40px;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 10px;
+  font-size: 30px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.header__counter {
+  width: 50px;
+  height: 50px;
+  background-color: #e67e22;
+  border: 3px solid black;
+  border-radius: 50%;
+  color: white;
+  font-size: 35px;
+  text-align: center;
+  line-height: 45px;
+  margin-top: 10px;
+}
+
+.pop-up {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pop-up div {
+  width: 350px;
+  height: 150px;
+  background-color: rgba(52, 73, 94, 0.7);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: translateY(-230px);
+}
+
+.pop-up__refresh {
+  width: 50px;
+  height: 50px;
+  background-color: #f8c291;
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+.pop-up__message {
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.hide {
+  display: none;
+}

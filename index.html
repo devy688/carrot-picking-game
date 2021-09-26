@@ -8,30 +8,28 @@
       src="https://kit.fontawesome.com/9eb162ac0d.js"
       crossorigin="anonymous"
     ></script>
-    <link href="style.css" />
+    <link rel="stylesheet" href="style.css" />
     <script defer src="./src/main.js"></script>
     <title>carrot-picking-game</title>
   </head>
   <body>
-    <div class="game">
-      <section>
-        <header class="game__header">
-          <button class="header__button">
-            <i class="fas fa-play"></i>
-          </button>
-          <span class="header__timer">0:10</span>
-          <span class="header__counter">0</span>
-        </header>
-        <section class="game__field"></section>
-      </section>
-      <section class="pop-up">
-        <div>
-          <button class="pop-up__refresh">
-            <i class="fas fa-redo"></i>
-          </button>
-          <span class="pop-up__message">WIN🎉</span>
-        </div>
-      </section>
-    </div>
+    <section class="game">
+      <header class="game__header">
+        <button class="header__button">
+          <i class="fas fa-play"></i>
+        </button>
+        <span class="header__timer">0:10</span>
+        <span class="header__counter">15</span>
+      </header>
+      <section class="game__field"></section>
+    </section>
+    <section class="pop-up hide">
+      <div>
+        <button class="pop-up__refresh">
+          <i class="fas fa-redo"></i>
+        </button>
+        <span class="pop-up__message">YOU WIN🎉</span>
+      </div>
+    </section>
   </body>
 </html>
