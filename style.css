@@ -71,6 +71,23 @@ button:hover {
   margin-top: 10px;
 }
 
+.game__field {
+  width: 100%;
+  height: 50%;
+  position: relative;
+  margin-top: 70px;
+}
+
+.item {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+}
+
+.item:hover {
+  transform: scale(1.2);
+}
+
 .pop-up {
   display: flex;
   flex-direction: column;
