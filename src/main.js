@@ -9,6 +9,7 @@ const imgSize = 60;
 
 const carrotsNum = 3;
 const bugsNum = 1;
+const totalTime = 10;
 
 let timerInterval;
 let started = false;
@@ -22,19 +23,16 @@ function getRandomCoords() {
   return [coordX, coordY];
 }
 
-function gameOver() {
-  clearInterval(timerInterval);
-  gameField.style.pointerEvents = "none";
-  popUp.classList.remove("hide");
-  popUpMsg.innerText = `YOU LOST😥`;
-  playBtn.style.visibility = "hidden";
-}
+function gameResult(result) {
+  if (result === "win") {
+    popUpMsg.innerText = `YOU WIN🎉`;
+  } else if (result === "lost") {
+    popUpMsg.innerText = `YOU LOST😥`;
+  }
 
-function gameWin() {
   clearInterval(timerInterval);
   gameField.style.pointerEvents = "none";
   popUp.classList.remove("hide");
-  popUpMsg.innerText = `YOU WIN🎉`;
   playBtn.style.visibility = "hidden";
 }
 
@@ -47,18 +45,21 @@ function onClickItem(event) {
     headerCounter--;
     counter.innerText = headerCounter;
     if (headerCounter === 0) {
-      gameWin();
+      gameResult("win");
     }
   } else if (target.classList[1] === "bug") {
-    gameOver();
+    gameResult("lost");
   }
 }
 
 function makeItem() {
   for (let i = 0; i < carrotsNum; i++) {
     const carrot = document.createElement("img");
-    carrot.setAttribute("src", "../img/carrot.png");
-    carrot.setAttribute("class", "item carrot");
+    // <img src="../img/carrot.png" class="item carrot" style="top: 21.5133px; right: 41.8318px;"></img>
+    // carrot.outerHTML = `<img src="../img/carrot.png" class="item carrot">`;
+    // carrot.setAttribute("src", "../img/carrot.png");
+    // carrot.setAttribute("class", "item carrot");
+    gameField.innerHTML += `<img src="../img/carrot.png" class="item carrot">`;
 
     const coords = getRandomCoords();
     carrot.style.top = `${coords[1]}px`;
@@ -81,13 +82,12 @@ function makeItem() {
 }
 
 function countTimer() {
-  let time = 10;
-  timer.innerText = `0:${time}`;
+  let time = totalTime;
   timerInterval = setInterval(() => {
     time--;
     timer.innerText = `0:${time}`;
     if (time === 0) {
-      gameOver();
+      gameResult("lost");
     }
   }, 1000);
 }
@@ -102,8 +102,8 @@ function stopGame() {
 
 function startGame() {
   started = true;
-  playBtn.style.visibility = "visible";
   playBtn.innerHTML = `<i class="fas fa-stop"></i>`;
+  playBtn.style.visibility = "visible";
   playBtn.removeEventListener("click", startGame);
   playBtn.addEventListener("click", stopGame);
   makeItem();
@@ -111,9 +111,10 @@ function startGame() {
 }
 
 function init() {
-  gameField.style.pointerEvents = "auto";
   clearInterval(timerInterval);
   counter.innerText = carrotsNum;
+  gameField.style.pointerEvents = "auto";
+  timer.innerText = `0:${totalTime}`;
   while (gameField.hasChildNodes()) {
     gameField.removeChild(gameField.firstChild);
   }
