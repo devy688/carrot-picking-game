@@ -1,7 +1,10 @@
 const playBtn = document.querySelector(".header__button");
 const gameField = document.querySelector(".game__field");
+const timer = document.querySelector(".header__timer");
 const imgSize = 60;
 
+let time = 10;
+let timerInterval;
 let started = false;
 
 function getRandomCoords() {
@@ -37,8 +40,20 @@ function makeItem() {
   }
 }
 
+function countTimer() {
+  timerInterval = setInterval(() => {
+    time--;
+    timer.innerText = `0:${time}`;
+    if (time === 0) {
+      clearInterval(timerInterval);
+    }
+  }, 1000);
+}
+
 function startGame() {
+  playBtn.innerHTML = `<i class="fas fa-stop"></i>`;
   makeItem();
+  countTimer();
 }
 
 function init() {
