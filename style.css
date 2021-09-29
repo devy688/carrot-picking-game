@@ -15,6 +15,7 @@ button {
   cursor: pointer;
   outline: none;
   font-size: 20px;
+  transition: transform 200ms ease-in;
 }
 
 button:hover {
@@ -53,22 +54,28 @@ button:hover {
   background-color: white;
   border: 3px solid black;
   border-radius: 10px;
+  cursor: auto;
   font-size: 30px;
   text-align: center;
   margin-top: 10px;
+  user-select: none;
+  visibility: hidden;
 }
 
-.header__counter {
+.header__score {
   width: 50px;
   height: 50px;
   background-color: #e67e22;
   border: 3px solid black;
   border-radius: 50%;
   color: white;
+  cursor: auto;
   font-size: 35px;
   text-align: center;
   line-height: 45px;
   margin-top: 10px;
+  user-select: none;
+  visibility: hidden;
 }
 
 .game__field {
@@ -82,19 +89,15 @@ button:hover {
   width: 60px;
   height: 60px;
   position: absolute;
+  transition: transform 100ms ease-in;
+  user-select: none;
 }
 
 .item:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .pop-up {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.pop-up div {
   width: 350px;
   height: 150px;
   background-color: rgba(52, 73, 94, 0.7);
@@ -104,6 +107,7 @@ button:hover {
   justify-content: space-evenly;
   align-items: center;
   transform: translateY(-230px);
+  margin: 0 auto;
 }
 
 .pop-up__refresh {
