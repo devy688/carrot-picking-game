@@ -1,5 +1,7 @@
 "use strict";
 
+import PopUp from "./popup.js";
+
 const IMG_SIZE = 60;
 const CARROTS_NUM = 15;
 const BUGS_NUM = 10;
@@ -11,10 +13,6 @@ const fieldRect = gameField.getBoundingClientRect();
 const gameTimer = document.querySelector(".header__timer");
 const gameScore = document.querySelector(".header__score");
 
-const popUp = document.querySelector(".pop-up");
-const replayBtn = document.querySelector(".pop-up__refresh");
-const popUpMsg = document.querySelector(".pop-up__message");
-
 const carrotSound = new Audio("./sound/carrot_pull.mp3");
 const alertSound = new Audio("./sound/alert.wav");
 const bgSound = new Audio("./sound/bg.mp3");
@@ -25,6 +23,12 @@ let started = false;
 let score = 0;
 let timer = undefined;
 
+const gameFinishBanner = new PopUp();
+
+gameFinishBanner.setClickListener(() => {
+  startGame();
+});
+
 playBtn.addEventListener("click", () => {
   if (started) {
     stopGame();
@@ -33,10 +37,6 @@ playBtn.addEventListener("click", () => {
   }
 });
 gameField.addEventListener("click", onFieldClick);
-replayBtn.addEventListener("click", () => {
-  startGame();
-  hidePopUp();
-});
 
 function startGame() {
   started = true;
@@ -51,7 +51,7 @@ function stopGame() {
   started = false;
   stopGameTimer();
   hideGameButton();
-  gameResult("pause");
+  gameFinishBanner.showWithText("pause");
   pauseSound(bgSound);
   playSound(alertSound);
 }
@@ -66,20 +66,7 @@ function finishGame(win) {
   }
   stopGameTimer();
   pauseSound(bgSound);
-  gameResult(win ? "win" : "lost");
-}
-
-function gameResult(result) {
-  if (result === "win") {
-    popUpMsg.innerText = `YOU WIN🎉`;
-  } else if (result === "lost") {
-    popUpMsg.innerText = `YOU LOST😥`;
-  } else if (result === "pause") {
-    popUpMsg.innerText = `REPLAY❓`;
-  }
-
-  gameField.style.pointerEvents = "none";
-  popUp.classList.remove("hide");
+  gameFinishBanner.showWithText(win ? "win" : "lost");
 }
 
 function showStopButton() {
@@ -118,10 +105,6 @@ function updateTimerText(time) {
 
 function stopGameTimer() {
   clearInterval(timer);
-}
-
-function hidePopUp() {
-  popUp.classList.add("hide");
 }
 
 function playSound(sound) {
