@@ -1,9 +1,8 @@
 "use strict";
 
-const IMG_SIZE = 60;
+import * as sound from "./sound.js";
 
-const carrotSound = new Audio("./sound/carrot_pull.mp3");
-const bugSound = new Audio("./sound/bug_pull.mp3");
+const IMG_SIZE = 60;
 
 class Field {
   constructor(carrotsNum, bugsNum) {
@@ -22,11 +21,11 @@ class Field {
     const target = event.target;
 
     if (target.matches(".carrot")) {
-      playSound(carrotSound);
+      sound.playCarrotSound();
       target.remove();
       this.onItemClick && this.onItemClick("carrot");
     } else if (target.matches(".bug")) {
-      playSound(bugSound);
+      sound.playBugSound();
       this.onItemClick && this.onItemClick("bug");
     }
   };
@@ -61,11 +60,6 @@ class Field {
 
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
-}
-
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
 }
 
 export default Field;
