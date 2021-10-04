@@ -4,7 +4,12 @@ import * as sound from "./sound.js";
 
 const IMG_SIZE = 60;
 
-class Field {
+export const ItemType = Object.freeze({
+  carrot: "carrot",
+  bug: "bug",
+});
+
+export class Field {
   constructor(carrotsNum, bugsNum) {
     this.carrotsNum = carrotsNum;
     this.bugsNum = bugsNum;
@@ -61,5 +66,3 @@ class Field {
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
-
-export default Field;
