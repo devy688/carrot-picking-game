@@ -56,7 +56,7 @@ class Game {
 
   onClick = () => {
     if (this.started) {
-      this.stop("pause");
+      this.stop(Reason.pause);
     } else {
       this.start();
     }
@@ -73,11 +73,11 @@ class Game {
       this.score++;
       this.updateScoreBoard();
       if (this.score === this.carrotsNum) {
-        this.finish(true);
+        this.stop(Reason.win);
       }
     } else if (item === "bug") {
       this.stopGameTimer();
-      this.finish(false);
+      this.stop(Reason.lose);
     }
   };
 
@@ -90,25 +90,11 @@ class Game {
     sound.playBackground();
   }
 
-  stop() {
+  stop(reason) {
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
-    this.onGameStop && this.onGameStop(Reason.pause);
-    sound.pauseBackground();
-    sound.playAlert();
-  }
-
-  finish(win) {
-    if (win) {
-      sound.playWin();
-    } else {
-      sound.playAlert();
-    }
-    this.started = false;
-    this.stopGameTimer();
-    this.hideGameButton();
-    this.onGameStop && this.onGameStop(win ? Reason.win : Reason.lose);
+    this.onGameStop && this.onGameStop(reason);
     sound.pauseBackground();
   }
 
@@ -133,7 +119,7 @@ class Game {
     this.updateTimerText(remainingTimeSec);
     this.timer = setInterval(() => {
       if (remainingTimeSec <= 0) {
-        this.finish(false);
+        this.stop(this.carrotsNum === this.score ? Reason.win : Reason.lose);
         return;
       }
       this.updateTimerText(--remainingTimeSec);

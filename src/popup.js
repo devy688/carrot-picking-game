@@ -17,8 +17,6 @@ class PopUp {
 
   showWithText(message) {
     this.popUpMsg.innerText = message;
-
-    // gameField.style.pointerEvents = "none";
     this.popUp.classList.remove("hide");
   }
 
