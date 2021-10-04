@@ -30,6 +30,10 @@ class Game {
     }
   };
 
+  setGameStopListener = (onGameStop) => {
+    this.onGameStop = onGameStop;
+  };
+
   onFieldClick = (item) => {
     if (!this.started) return;
 
@@ -58,6 +62,7 @@ class Game {
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
+    this.onGameStop && this.onGameStop("pause");
     sound.pauseBackground();
     sound.playAlertSound();
   }
@@ -73,6 +78,7 @@ class Game {
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
+    this.onGameStop && this.onGameStop(result);
     sound.pauseBackground();
   }
 
@@ -97,7 +103,7 @@ class Game {
     this.updateTimerText(remainingTimeSec);
     this.timer = setInterval(() => {
       if (remainingTimeSec <= 0) {
-        this.finish(false);
+        this.finish("lost");
         return;
       }
       this.updateTimerText(--remainingTimeSec);

@@ -15,14 +15,8 @@ class PopUp {
     this.onClick = onClick;
   };
 
-  showWithText(result) {
-    if (result === "win") {
-      this.popUpMsg.innerText = `YOU WIN🎉`;
-    } else if (result === "lost") {
-      this.popUpMsg.innerText = `YOU LOST😥`;
-    } else if (result === "pause") {
-      this.popUpMsg.innerText = `REPLAY❓`;
-    }
+  showWithText(message) {
+    this.popUpMsg.innerText = message;
 
     // gameField.style.pointerEvents = "none";
     this.popUp.classList.remove("hide");
