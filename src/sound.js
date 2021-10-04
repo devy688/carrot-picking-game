@@ -4,19 +4,19 @@ const bgSound = new Audio("./sound/bg.mp3");
 const bugSound = new Audio("./sound/bug_pull.mp3");
 const winSound = new Audio("./sound/game_win.mp3");
 
-export const playCarrotSound = () => {
+export const playCarrot = () => {
   playSound(carrotSound);
 };
 
-export const playAlertSound = () => {
+export const playAlert = () => {
   playSound(alertSound);
 };
 
-export const playBugSound = () => {
+export const playBug = () => {
   playSound(bugSound);
 };
 
-export const playWinSound = () => {
+export const playWin = () => {
   playSound(winSound);
 };
 

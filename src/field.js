@@ -21,11 +21,11 @@ class Field {
     const target = event.target;
 
     if (target.matches(".carrot")) {
-      sound.playCarrotSound();
+      sound.playCarrot();
       target.remove();
       this.onItemClick && this.onItemClick("carrot");
     } else if (target.matches(".bug")) {
-      sound.playBugSound();
+      sound.playBug();
       this.onItemClick && this.onItemClick("bug");
     }
   };

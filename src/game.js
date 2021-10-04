@@ -96,14 +96,14 @@ class Game {
     this.hideGameButton();
     this.onGameStop && this.onGameStop(Reason.pause);
     sound.pauseBackground();
-    sound.playAlertSound();
+    sound.playAlert();
   }
 
   finish(win) {
     if (win) {
-      sound.playWinSound();
+      sound.playWin();
     } else {
-      sound.playAlertSound();
+      sound.playAlert();
     }
     this.started = false;
     this.stopGameTimer();
