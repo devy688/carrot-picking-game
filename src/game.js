@@ -3,6 +3,12 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
+export const Reason = Object.freeze({
+  win: "win",
+  lose: "lose",
+  pause: "pause",
+});
+
 // Builder Pattern
 export class GameBuilder {
   withGameDuration(duration) {
@@ -67,11 +73,11 @@ class Game {
       this.score++;
       this.updateScoreBoard();
       if (this.score === this.carrotsNum) {
-        this.finish("win");
+        this.finish(true);
       }
     } else if (item === "bug") {
       this.stopGameTimer();
-      this.finish("lost");
+      this.finish(false);
     }
   };
 
@@ -88,23 +94,21 @@ class Game {
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
-    this.onGameStop && this.onGameStop("pause");
+    this.onGameStop && this.onGameStop(Reason.pause);
     sound.pauseBackground();
     sound.playAlertSound();
   }
 
-  finish(result) {
-    if (result === "win") {
+  finish(win) {
+    if (win) {
       sound.playWinSound();
-    } else if (result === "lost") {
-      sound.playAlertSound();
-    } else if (result === "pause") {
+    } else {
       sound.playAlertSound();
     }
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
-    this.onGameStop && this.onGameStop(result);
+    this.onGameStop && this.onGameStop(win ? Reason.win : Reason.lose);
     sound.pauseBackground();
   }
 
@@ -129,7 +133,7 @@ class Game {
     this.updateTimerText(remainingTimeSec);
     this.timer = setInterval(() => {
       if (remainingTimeSec <= 0) {
-        this.finish("lost");
+        this.finish(false);
         return;
       }
       this.updateTimerText(--remainingTimeSec);
