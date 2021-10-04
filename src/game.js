@@ -3,6 +3,32 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
+// Builder Pattern
+export class GameBuilder {
+  withGameDuration(duration) {
+    this.gameDuration = duration;
+    return this;
+  }
+
+  withCarrotCount(num) {
+    this.carrotsNum = num;
+    return this;
+  }
+
+  withBugCount(num) {
+    this.bugsNum = num;
+    return this;
+  }
+
+  build() {
+    return new Game(
+      this.carrotsNum, //
+      this.bugsNum,
+      this.gameDuration
+    );
+  }
+}
+
 class Game {
   constructor(carrotsNum, bugsNum, gameDuration) {
     this.carrotsNum = carrotsNum;
@@ -130,5 +156,3 @@ class Game {
     this.gameScore.innerText = this.carrotsNum;
   }
 }
-
-export default Game;
