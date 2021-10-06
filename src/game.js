@@ -3,6 +3,9 @@
 import { Field, ItemType } from "./field.js";
 import * as sound from "./sound.js";
 
+const INIT_NUM = 1;
+const INIT_DURATION = 5;
+
 export const Reason = Object.freeze({
   win: "win",
   lose: "lose",
@@ -28,58 +31,61 @@ export class GameBuilder {
 
   build() {
     return new Game(
+      this.gameDuration, //
       this.carrotsNum, //
-      this.bugsNum,
-      this.gameDuration
+      this.bugsNum
     );
   }
 }
 
 class Game {
-  constructor(carrotsNum, bugsNum, gameDuration) {
+  constructor(gameDuration, carrotsNum, bugsNum) {
+    this.level = INIT_NUM;
     this.carrotsNum = carrotsNum;
     this.bugsNum = bugsNum;
     this.gameDuration = gameDuration;
 
-    this.gameTimer = document.querySelector(".header__timer");
-    this.gameScore = document.querySelector(".header__score");
-    this.gameBtn = document.querySelector(".header__button");
-    this.gameBtn.addEventListener("click", this.onClick);
-
-    this.gameField = new Field(carrotsNum, bugsNum);
-    this.gameField.setClickListener(this.onFieldClick);
-
     this.started = false;
     this.score = 0;
+    this.point = 0;
     this.timer = undefined;
-  }
 
-  onClick = () => {
-    if (this.started) {
-      this.stop(Reason.pause);
-    } else {
-      this.start();
-    }
-  };
+    this.gameTimer = document.querySelector(".header__timer");
+    this.gameScore = document.querySelector(".header__score");
+    this.gameTotalScore = document.querySelector(".total-score");
+    this.gameBtn = document.querySelector(".header__button");
+    this.gameBtn.addEventListener("click", () => {
+      if (this.started) {
+        this.stop(Reason.pause, this.gameTotalScore.innerText);
+      } else {
+        this.start();
+      }
+    });
+
+    this.gameField = new Field(carrotsNum, bugsNum);
+    this.gameField.setClickListener(this.onItemClick);
+  }
 
   setGameStopListener = (onGameStop) => {
     this.onGameStop = onGameStop;
   };
 
-  onFieldClick = (item) => {
-    if (!this.started) return;
+  nextStage() {
+    this.level++;
+    this.carrotsNum = this.carrotsNum + this.level;
+    this.bugsNum = this.bugsNum + this.level;
+    this.gameDuration++;
+  }
 
-    if (item === ItemType.carrot) {
-      this.score++;
-      this.updateScoreBoard();
-      if (this.score === this.carrotsNum) {
-        this.stop(Reason.win);
-      }
-    } else if (ItemType.bug) {
-      this.stopGameTimer();
-      this.stop(Reason.lose);
-    }
-  };
+  initStage() {
+    this.level = INIT_NUM;
+    this.carrotsNum = INIT_NUM;
+    this.bugsNum = INIT_NUM;
+    this.gameDuration = INIT_DURATION;
+    this.gameField.setItemCount(INIT_NUM);
+    this.point = 0;
+    this.updateTotalScoreBoard();
+  }
 
   start() {
     this.started = true;
@@ -87,16 +93,39 @@ class Game {
     this.showStopButton();
     this.showTimerAndScore();
     this.startGameTimer();
+    this.showTotalScore();
     sound.playBackground();
   }
 
-  stop(reason) {
+  stop(reason, point) {
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
-    this.onGameStop && this.onGameStop(reason);
     sound.pauseBackground();
+
+    if (reason === Reason.pause) this.initStage();
+    this.onGameStop && this.onGameStop(reason, point);
   }
+
+  onItemClick = (item) => {
+    if (!this.started) return;
+
+    if (item === ItemType.carrot) {
+      this.score++;
+      this.updateScoreBoard();
+      this.point++;
+      this.updateTotalScoreBoard();
+      if (this.score === this.carrotsNum) {
+        this.stop(Reason.win, this.gameTotalScore.innerText);
+        this.nextStage();
+        this.gameField.setItemCount(this.carrotsNum);
+      }
+    } else if (item === ItemType.bug) {
+      this.stop(Reason.lose, this.gameTotalScore.innerText);
+      this.initStage();
+      this.stopGameTimer();
+    }
+  };
 
   showStopButton() {
     const icon = this.gameBtn.querySelector(".fas");
@@ -114,12 +143,19 @@ class Game {
     this.gameScore.style.visibility = "visible";
   }
 
+  showTotalScore() {
+    this.gameTotalScore.style.visibility = "visible";
+  }
+
   startGameTimer() {
     let remainingTimeSec = this.gameDuration;
     this.updateTimerText(remainingTimeSec);
     this.timer = setInterval(() => {
       if (remainingTimeSec <= 0) {
-        this.stop(this.carrotsNum === this.score ? Reason.win : Reason.lose);
+        this.stop(
+          this.carrotsNum === this.score ? Reason.win : Reason.lose,
+          this.gameTotalScore.innerText
+        );
         return;
       }
       this.updateTimerText(--remainingTimeSec);
@@ -138,6 +174,10 @@ class Game {
 
   updateScoreBoard() {
     this.gameScore.innerText = this.carrotsNum - this.score;
+  }
+
+  updateTotalScoreBoard() {
+    this.gameTotalScore.innerText = this.point;
   }
 
   init() {

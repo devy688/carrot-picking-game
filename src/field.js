@@ -2,7 +2,7 @@
 
 import * as sound from "./sound.js";
 
-const IMG_SIZE = 60;
+const IMG_SIZE = 80;
 
 export const ItemType = Object.freeze({
   carrot: "carrot",
@@ -18,6 +18,12 @@ export class Field {
     this.field.addEventListener("click", this.onClick);
   }
 
+  // 출력할 아이템 수를 game class에서 전달받은 매개변수로 업데이트
+  setItemCount(stageItemCount) {
+    this.carrotsNum = stageItemCount;
+    this.bugsNum = stageItemCount;
+  }
+
   setClickListener = (onItemClick) => {
     this.onItemClick = onItemClick;
   };
@@ -28,10 +34,10 @@ export class Field {
     if (target.matches(".carrot")) {
       sound.playCarrot();
       target.remove();
-      this.onItemClick && this.onItemClick("carrot");
+      this.onItemClick && this.onItemClick(ItemType.carrot);
     } else if (target.matches(".bug")) {
       sound.playBug();
-      this.onItemClick && this.onItemClick("bug");
+      this.onItemClick && this.onItemClick(ItemType.bug);
     }
   };
 

@@ -15,7 +15,16 @@ class PopUp {
     this.onClick = onClick;
   };
 
-  showWithText(message) {
+  showWithText(message, reason) {
+    const icon = this.popUpRefresh.querySelector(".fas");
+    if (reason === "win") {
+      icon.classList.add("fa-arrow-right");
+      icon.classList.remove("fa-redo");
+    } else {
+      icon.classList.add("fa-redo");
+      icon.classList.remove("fa-arrow-right");
+    }
+
     this.popUpMsg.innerText = message;
     this.popUp.classList.remove("hide");
   }
