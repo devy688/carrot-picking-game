@@ -167,9 +167,12 @@ class Game {
   }
 
   updateTimerText(time) {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    this.gameTimer.innerText = `${minutes}:${seconds}`;
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+
+    let minute = minutes < 10 ? `0${minutes}` : minutes;
+    let second = seconds < 10 ? `0${seconds}` : seconds;
+    this.gameTimer.innerText = `${minute}:${second}`;
   }
 
   updateScoreBoard() {
