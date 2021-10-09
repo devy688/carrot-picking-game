@@ -64,8 +64,8 @@ export class Field {
   init() {
     this.field.innerHTML = "";
     this.field.style.pointerEvents = "auto";
-    this._makeItem("carrot", this.carrotsNum, "../img/carrot.png");
-    this._makeItem("bug", this.bugsNum, "../img/bug.png");
+    this._makeItem("carrot", this.carrotsNum, "img/carrot.png");
+    this._makeItem("bug", this.bugsNum, "img/bug.png");
   }
 }
 
