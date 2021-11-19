@@ -87,11 +87,11 @@ export class Field {
     this.field.style.pointerEvents = "none";
   }
 
-  init() {
+  init(itemsNum) {
     this.field.innerHTML = "";
     this.field.style.pointerEvents = "auto";
-    this.#makeItem("carrot", this.carrotsNum, "img/carrot.png");
-    this.#makeItem("bug", this.bugsNum, "img/bug.png");
+    this.#makeItem("carrot", itemsNum, "img/carrot.png");
+    this.#makeItem("bug", itemsNum, "img/bug.png");
   }
 }
 

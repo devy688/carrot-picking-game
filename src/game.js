@@ -103,7 +103,7 @@ class Game {
     this.gameField.stopMoveItem();
     sound.pauseBackground();
 
-    if (reason === Reason.pause) this.initStage();
+    if (reason !== Reason.win) this.initStage();
     this.onGameStop && this.onGameStop(reason, point);
   }
 
@@ -185,7 +185,7 @@ class Game {
 
   init() {
     this.score = 0;
-    this.gameField.init();
+    this.gameField.init(this.carrotsNum);
     this.gameScore.innerText = this.carrotsNum;
   }
 }
