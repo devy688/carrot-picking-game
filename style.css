@@ -103,12 +103,16 @@ button:hover {
 
 .item {
   position: absolute;
-  transition: transform 100ms ease-in;
+  transition: transform 100ms ease-out;
   user-select: none;
 }
 
 .item:hover {
   transform: scale(1.1);
+}
+
+.item.bug {
+  transition: transform 2s ease-in-out;
 }
 
 .pop-up {

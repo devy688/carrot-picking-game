@@ -19,11 +19,11 @@ game.setGameStopListener((reason, point) => {
       sound.playAlert();
       break;
     case Reason.win:
-      message = "🎉 NEXT STAGE 🎉";
+      message = "💁‍♀️ NEXT LEVEL 💁‍♂️";
       sound.playWin();
       break;
     case Reason.lose:
-      message = `${point}점😥`;
+      message = `${point} ${point <= 1 ? "point" : "points"} 😥`;
       sound.playBug();
       break;
     default:

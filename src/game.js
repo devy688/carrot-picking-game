@@ -82,7 +82,6 @@ class Game {
     this.carrotsNum = INIT_NUM;
     this.bugsNum = INIT_NUM;
     this.gameDuration = INIT_DURATION;
-    this.gameField.setItemCount(INIT_NUM);
     this.point = 0;
     this.updateTotalScoreBoard();
   }
@@ -101,6 +100,7 @@ class Game {
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
+    this.gameField.stopMoveItem();
     sound.pauseBackground();
 
     if (reason === Reason.pause) this.initStage();

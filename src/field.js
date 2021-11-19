@@ -13,9 +13,17 @@ export class Field {
   constructor(carrotsNum, bugsNum) {
     this.carrotsNum = carrotsNum;
     this.bugsNum = bugsNum;
+    this.mover = undefined;
+    this.setMover = undefined;
+    this.intervals = [];
     this.field = document.querySelector(".game__field");
     this.fieldRect = this.field.getBoundingClientRect();
     this.field.addEventListener("click", this.onClick);
+
+    this.x1 = 0;
+    this.y1 = 0;
+    this.x2 = this.fieldRect.width - IMG_SIZE;
+    this.y2 = this.fieldRect.height - IMG_SIZE;
   }
 
   // 출력할 아이템 수를 game class에서 전달받은 매개변수로 업데이트
@@ -41,31 +49,49 @@ export class Field {
     }
   };
 
-  _makeItem(className, count, imgPath) {
-    const x1 = 0;
-    const y1 = 0;
-    const x2 = this.fieldRect.width - IMG_SIZE;
-    const y2 = this.fieldRect.height - IMG_SIZE;
-
+  #makeItem(className, count, imgPath) {
     for (let i = 0; i < count; i++) {
       const img = document.createElement("img");
       img.setAttribute("src", imgPath);
       img.setAttribute("class", `item ${className}`);
 
-      const x = randomNumber(x1, x2);
-      const y = randomNumber(y1, y2);
+      const x = randomNumber(this.x1, this.x2);
+      const y = randomNumber(this.y1, this.y2);
       img.style.position = "absolute";
       img.style.top = `${y}px`;
       img.style.left = `${x}px`;
       this.field.appendChild(img);
+
+      className === "bug" && this.#moveItem(img, x, y);
     }
+  }
+
+  #moveItem(img, x, y) {
+    this.mover = () => {
+      const coordX = randomNumber(this.x1, this.x2) - x;
+      const coordY = randomNumber(this.y1, this.y2) - y;
+      img.style.transform = `translate(${coordX}px, ${coordY}px)`;
+    };
+
+    setTimeout(this.mover);
+    this.setMover = setInterval(this.mover, 3000);
+    this.intervals.push(this.setMover);
+  }
+
+  stopMoveItem() {
+    // clear all intervals
+    for (let i = 0; i < this.intervals.length; i++) {
+      clearInterval(this.intervals[i]);
+    }
+
+    this.field.style.pointerEvents = "none";
   }
 
   init() {
     this.field.innerHTML = "";
     this.field.style.pointerEvents = "auto";
-    this._makeItem("carrot", this.carrotsNum, "img/carrot.png");
-    this._makeItem("bug", this.bugsNum, "img/bug.png");
+    this.#makeItem("carrot", this.carrotsNum, "img/carrot.png");
+    this.#makeItem("bug", this.bugsNum, "img/bug.png");
   }
 }
 
