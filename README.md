@@ -1,48 +1,68 @@
-# carrot-picking-game
+# Carrot Picking Game with VanillaJS
 
-### 🥕 VanillaJS practice
+_VanillaJS Practice_
 
-- 드림코딩 프론트엔드강의에서 진행한 프로젝트
-- 링크: https://devy688.github.io/carrot-picking-game/
+Demo Link => https://devy688.github.io/carrot-picking-game/
+
+<br>
+
+## 🥕 Purpose of this project
+
+---
+
+<br>
+
+- Implementing app using VanillaJS
+- Getting Element size using WebAPIs
+- Learning about Refactoring
+
+<br>
+
+## 🐛 Tech Stack
+
+---
+
+<br>
+<img alt="HTML5" src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/> 
+<img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/>
+<img alt="JavaScript" src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>  
   <br>
   <br>
-
-### 📅 프로젝트 기간
-
-- 2021.09.26 ~ 2021.10.06
-  <br>
   <br>
 
-### 🥕 사용된 기술
+## 💻 About Project
 
-- HTML
-- CSS
-- Javascript
-  <br>
-  <br>
+---
 
-### 📚 구현
+<br>
+
+Demo Link => https://devy688.github.io/carrot-picking-game/
+
+<br>
+<br>
+
+## 📝 What I Learned
+
+---
 
 <br>
 
 ### 1. Object.freeze
 
-- 객체를 동결시켜 변경되지 않게 만듬
-
-  ```javascript
-  export const Reason = Object.freeze({
-    win: "win",
-    lost: "lost",
-    pause: "pause",
-  });
-  ```
+```javascript
+export const Reason = Object.freeze({
+  win: "win",
+  lost: "lost",
+  pause: "pause",
+});
+```
 
 <br>
 
-### 2. 빌더 패턴
+### 2. Builder Pattern
 
 ```javascript
-// game.js
+/* game.js */
 export class GameBuilder {
   withGameDuration(duration) {
     this.gameDuration = duration;
@@ -66,75 +86,50 @@ export class GameBuilder {
 }
 ```
 
-```javascript
-// main.js
-const game = new GameBuilder()
-  .withGameDuration(5)
-  .withCarrotCount(1)
-  .withBugCount(1)
-  .build();
-```
-
 <br>
 
-### 🥕 새로 배운 것
+### 3. Create a custom callback
 
-- 콜백함수 등록하기 (코드의 재사용성을 높여줌)
-
-  ```javascript
-  // popup.js
-  class PopUp {
-    constructor() {
-      this.popUpRefresh = document.querySelector(".pop-up__refresh");
-      this.popUpRefresh.addEventListener("click", () => {
-        this.onClick && this.onClick();
-        this.hide();
-      });
-    }
+```javascript
+/* popup.js */
+class PopUp {
+  constructor() {
     setClickListener = (onClick) => {
       this.onClick = onClick;
     };
   }
-  ```
+}
+```
 
-  ```javascript
-  // main.js
-  const gameFinishBanner = new PopUp();
-  gameFinishBanner.setClickListener(() => {
-    game.start();
-  });
-  ```
-
-- 리팩토링
-
-  - 컴포넌트단위로 클래스 생성하기
-  - 프로그램의 생애주기별로 세분화하기
-
-    ```javascript
-    // 게임의 3단계
-    start() {
-      this.started = true;
-      this.init();
-      this.showStopButton();
-      this.showTimerAndScore();
-      this.startGameTimer();
-      this.showTotalScore();
-      sound.playBackground();
-    }
-    stop(reason, point) {
-      this.started = false;
-      this.stopGameTimer();
-      this.hideGameButton();
-      sound.pauseBackground();
-      if (reason === Reason.pause) this.initStage();
-      this.onGameStop && this.onGameStop(reason, point);
-    }
-    nextStage() {
-      this.level++;
-      this.carrotsNum = this.carrotsNum + this.level;
-      this.bugsNum = this.bugsNum + this.level;
-      this.gameDuration++;
-    }
-    ```
+```javascript
+/* main.js*/
+const gameFinishBanner = new PopUp();
+gameFinishBanner.setClickListener(() => {
+  game.start();
+});
+```
 
 <br>
+
+### 4. Refactoring
+
+- Extract Function & Class based on what they are doing
+- Separating by program lifecycle
+
+  ```javascript
+  start -> nextStage -> stop -> initStage
+  ```
+
+<br>
+<br>
+
+## 👩‍💻 What I want to update
+
+---
+
+<br>
+
+- [x] Increasing difficulty - _(Oct 6, 2021)_
+- [x] Make bugs move - _(Nov 19, 2021)_
+- [ ] Create a starter banner
+- [ ] Float a special item - get rid of all bugs
