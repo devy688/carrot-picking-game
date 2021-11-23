@@ -8,10 +8,6 @@ Demo Link => https://devy688.github.io/carrot-picking-game/
 
 ## 🥕 Purpose of this project
 
----
-
-<br>
-
 - Implementing app using VanillaJS
 - Getting Element size using WebAPIs
 - Learning about Refactoring
@@ -20,32 +16,19 @@ Demo Link => https://devy688.github.io/carrot-picking-game/
 
 ## 🐛 Tech Stack
 
----
-
-<br>
-<img alt="HTML5" src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/> 
-<img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/>
-<img alt="JavaScript" src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>  
-  <br>
-  <br>
-  <br>
+<img alt="HTML5" src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/><img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/><img alt="JavaScript" src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>  
+ <br>
 
 ## 💻 About Project
 
----
-
-<br>
-
 Demo Link => https://devy688.github.io/carrot-picking-game/
-
 <br>
+
+![carrot](https://user-images.githubusercontent.com/91401462/142962442-0ef1d229-bbf6-42fa-93f3-91402c0cb38c.gif)
+
 <br>
 
 ## 📝 What I Learned
-
----
-
-<br>
 
 ### 1. Object.freeze
 
@@ -56,8 +39,6 @@ export const Reason = Object.freeze({
   pause: "pause",
 });
 ```
-
-<br>
 
 ### 2. Builder Pattern
 
@@ -86,8 +67,6 @@ export class GameBuilder {
 }
 ```
 
-<br>
-
 ### 3. Create a custom callback
 
 ```javascript
@@ -109,8 +88,6 @@ gameFinishBanner.setClickListener(() => {
 });
 ```
 
-<br>
-
 ### 4. Refactoring
 
 - Extract Function & Class based on what they are doing
@@ -120,14 +97,9 @@ gameFinishBanner.setClickListener(() => {
   start -> nextStage -> stop -> initStage
   ```
 
-<br>
-<br>
+  <br>
 
 ## 👩‍💻 What I want to update
-
----
-
-<br>
 
 - [x] Increasing difficulty - _(Oct 6, 2021)_
 - [x] Make bugs move - _(Nov 19, 2021)_

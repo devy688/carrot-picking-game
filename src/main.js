@@ -15,15 +15,15 @@ game.setGameStopListener((reason, point) => {
   let message;
   switch (reason) {
     case Reason.pause:
-      message = "REPLAY❓";
+      message = "REPLAY?";
       sound.playAlert();
       break;
     case Reason.win:
-      message = "💁‍♀️ NEXT LEVEL 💁‍♂️";
+      message = "NEXT LEVEL!";
       sound.playWin();
       break;
     case Reason.lose:
-      message = `${point} ${point <= 1 ? "point" : "points"} 😥`;
+      message = `${point} ${point <= 1 ? "point" : "points"}`;
       sound.playBug();
       break;
     default:
